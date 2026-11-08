@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FeedMiles: how far did your feed travel today?</title>
+<meta name="description" content="FeedMiles measures how far you scroll in Instagram and YouTube and splits it into friends, strangers and ads. Everything stays on your phone.">
+<meta property="og:title" content="FeedMiles">
+<meta property="og:description" content="An odometer for your feed. How far you scrolled, and what it was made of.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 108 108'%3E%3Crect width='108' height='108' rx='24' fill='%231F3A5F'/%3E%3Crect x='33' y='30' width='42' height='12' rx='3' fill='%23FAF8F4'/%3E%3Crect x='33' y='46' width='42' height='12' rx='3' fill='%23FAF8F4' opacity='.7'/%3E%3Crect x='33' y='72' width='8' height='6' fill='%235FD3A8'/%3E%3Crect x='41' y='72' width='22' height='6' fill='%23FF9B54'/%3E%3Crect x='63' y='72' width='12' height='6' fill='%23B9A4FF'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --ink: #1F3A5F; --paper: #FAF8F4; --text: #16181C; --muted: #4A4D52; --card: #FFFFFF; --line: #E4DFD6;
+    --friend: #1B7F5E; --stranger: #C2560A; --ad: #6A4FB3; --unknown: #757575;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #A9C7F0; --paper: #111316; --text: #E8E6E1; --muted: #BFC2C7; --card: #1A1D21; --line: #2C3036;
+      --friend: #5FD3A8; --stranger: #FF9B54; --ad: #B9A4FF; --unknown: #A8A8A8; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--text); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.1; margin: 8px 0 12px; letter-spacing: -0.02em; }
+  h2 { font-size: 1.3rem; margin: 40px 0 8px; }
+  p { margin: 0 0 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); }
+  .brand svg { width: 36px; height: 36px; }
+  .lede { color: var(--muted); font-size: 1.1rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 24px 0; }
+  .odo { font: 700 clamp(2.6rem, 12vw, 3.6rem)/1 ui-monospace, "Roboto Mono", Menlo, monospace; letter-spacing: -0.04em; }
+  .odo small { font-size: .45em; color: var(--muted); letter-spacing: 0; }
+  .bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; margin: 16px 0 12px; }
+  .legend { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+  .legend li { display: flex; gap: 10px; align-items: baseline; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; flex: none; transform: translateY(1px); }
+  .num { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 4.5em; }
+  .btn { display: inline-block; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 700;
+    padding: 14px 22px; border-radius: 12px; min-height: 48px; }
+  .btn:focus-visible, a:focus-visible { outline: 3px solid var(--stranger); outline-offset: 2px; }
+  .sub { font-size: .92rem; color: var(--muted); }
+  ul.points { padding-left: 1.2em; }
+  ul.points li { margin-bottom: 8px; }
+  .shot { aspect-ratio: 9 / 16; max-width: 280px; margin: 24px auto; border: 2px dashed var(--line); border-radius: 24px;
+    display: grid; place-items: center; color: var(--muted); text-align: center; padding: 16px; }
+  footer { margin-top: 48px; font-size: .88rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+  footer a, main a { color: var(--ink); }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">
+    <svg viewBox="0 0 108 108" aria-hidden="true"><rect width="108" height="108" rx="24" fill="#1F3A5F"/><rect x="33" y="30" width="42" height="12" rx="3" fill="#FAF8F4"/><rect x="33" y="46" width="42" height="12" rx="3" fill="#FAF8F4" opacity=".7"/><rect x="33" y="62" width="42" height="5" rx="2" fill="#FAF8F4" opacity=".45"/><rect x="33" y="72" width="8" height="6" fill="#5FD3A8"/><rect x="41" y="72" width="22" height="6" fill="#FF9B54"/><rect x="63" y="72" width="12" height="6" fill="#B9A4FF"/></svg>
+    FeedMiles
+  </div>
+
+  <h1>How far did your feed travel today?</h1>
+  <p class="lede">FeedMiles is an odometer for your feed. It measures how far you scroll in Instagram and YouTube, then shows what it was made of: people you follow, strangers the algorithm pushed, and ads.</p>
+
+  <div class="card" role="img" aria-label="Example: today your feed travelled 1.4 kilometres. 820 metres strangers, 410 metres ads, 170 metres people you follow.">
+    <div class="sub">Today your feed travelled</div>
+    <div class="odo">1.4 <small>km</small></div>
+    <div class="bar" aria-hidden="true">
+      <span style="width:58%;background:var(--stranger)"></span>
+      <span style="width:29%;background:var(--ad)"></span>
+      <span style="width:12%;background:var(--friend)"></span>
+      <span style="width:1%;background:var(--unknown)"></span>
+    </div>
+    <ul class="legend" aria-hidden="true">
+      <li><span class="dot" style="background:var(--stranger)"></span><span class="num">820 m</span> strangers the algorithm pushed</li>
+      <li><span class="dot" style="background:var(--ad)"></span><span class="num">410 m</span> ads</li>
+      <li><span class="dot" style="background:var(--friend)"></span><span class="num">170 m</span> people you follow</li>
+    </ul>
+    <p class="sub" style="margin-top:12px">You walked 410 m through ads.</p>
+  </div>
+
+  <p><a class="btn" href="https://github.com/sarathbabu123/feedmiles-rules/releases/latest/download/FeedMiles.apk">Download for Android</a></p>
+  <p class="sub">Free, no ads, no account. Android 9 or newer. Since it isn't on the Play Store yet, read the <a href="install.html">2-minute install guide</a> first.</p>
+
+  <div class="shot" aria-hidden="true">App screenshot<br>coming soon</div>
+
+  <h2>Nothing leaves your phone</h2>
+  <ul class="points">
+    <li>FeedMiles keeps <strong>numbers only</strong>: distance, plus counts of posts, reels and ads.</li>
+    <li>It never stores usernames, captions, photos, videos, messages, links or anything you type.</li>
+    <li>No account, no analytics, no ads. The only thing it downloads is a small, signed rules file that helps it recognise labels like "Sponsored".</li>
+    <li>It only looks at Instagram and YouTube, and only while they're open. You can pause it or delete everything in one tap.</li>
+  </ul>
+  <p>Read the full <a href="privacy.html">privacy policy</a>.</p>
+
+  <h2>How it works</h2>
+  <p>FeedMiles uses Android's Accessibility service to see how far the screen scrolls and which labels the apps already show, such as "Sponsored" and "Suggested for you". It converts on-screen pixels into real distance using your screen's density. Because a flick sends content flying, feed distance is more than your thumb moved, and we say so. Anything it can't classify shows as Unknown and is never guessed.</p>
+
+  <footer>
+    <p>FeedMiles is not affiliated with Instagram, Meta, YouTube or Google.</p>
+    <p><a href="install.html">Install guide</a> · <a href="privacy.html">Privacy</a> · <a href="mailto:sarathbabuparakkadavu@gmail.com">Contact</a></p>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install FeedMiles</title>
+<meta name="description" content="How to install the FeedMiles APK on Android and switch on tracking.">
+<style>
+  :root { --ink: #1F3A5F; --paper: #FAF8F4; --text: #16181C; --muted: #4A4D52; --card: #FFFFFF; --line: #E4DFD6; --warn: #C2560A; --ok: #1B7F5E; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #A9C7F0; --paper: #111316; --text: #E8E6E1; --muted: #BFC2C7; --card: #1A1D21; --line: #2C3036; --warn: #FF9B54; --ok: #5FD3A8; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--text); font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 28px 16px 64px; }
+  a { color: var(--ink); }
+  a:focus-visible, summary:focus-visible { outline: 3px solid var(--warn); outline-offset: 2px; }
+  h1 { font-size: clamp(1.8rem, 6vw, 2.4rem); line-height: 1.15; margin: 12px 0 8px; }
+  h2 { font-size: 1.2rem; margin: 0 0 8px; }
+  .lede { color: var(--muted); }
+  ol.steps { list-style: none; padding: 0; margin: 24px 0; counter-reset: s; }
+  ol.steps > li { counter-increment: s; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 18px 14px 60px; margin-bottom: 14px; position: relative; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 16px; top: 16px; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--ink); color: var(--paper); font-weight: 700; display: grid; place-items: center; }
+  .path { font-weight: 600; }
+  .note { border-left: 4px solid var(--warn); padding: 6px 0 6px 12px; margin: 10px 0; }
+  .good { border-left-color: var(--ok); }
+  .btn { display: inline-block; background: var(--ink); color: var(--paper); text-decoration: none; font-weight: 700; padding: 12px 20px; border-radius: 12px; min-height: 48px; }
+  details { border-top: 1px solid var(--line); padding: 10px 0; }
+  summary { cursor: pointer; font-weight: 600; min-height: 32px; }
+  ul { padding-left: 1.2em; }
+  li { margin-bottom: 6px; }
+  footer { margin-top: 40px; font-size: .88rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="index.html">← FeedMiles</a></p>
+  <h1>Install FeedMiles</h1>
+  <p class="lede">FeedMiles isn't on the Play Store yet, so Android shows a few extra warnings. This takes about 2 minutes. You need Android 9 or newer.</p>
+
+  <ol class="steps">
+    <li>
+      <h2>Download the app</h2>
+      <p><a class="btn" href="https://github.com/sarathbabu123/feedmiles-rules/releases/latest/download/FeedMiles.apk">Download FeedMiles.apk</a></p>
+      <p>Open the file when the download finishes. If someone sent it to you on WhatsApp, tap the file in the chat.</p>
+    </li>
+
+    <li>
+      <h2>If Play Protect blocks it</h2>
+      <p>In India, Google Play Protect blocks apps from outside the Play Store that use Accessibility, even safe ones. If you see <em>"Blocked by Play Protect"</em> or <em>"App blocked to protect your device"</em>:</p>
+      <p class="path">Play Store → your profile picture → Play Protect → ⚙ (top right) → turn off "Scan apps with Play Protect"</p>
+      <p>Then open the APK again and install.</p>
+      <p class="note good"><strong>Turn Play Protect back on afterwards</strong> (same switch). FeedMiles keeps working.</p>
+    </li>
+
+    <li>
+      <h2>Allow the install</h2>
+      <p>Android may say your browser or WhatsApp <em>"isn't allowed to install unknown apps"</em>. Tap <span class="path">Settings</span> → turn on <span class="path">Allow from this source</span> → go back → <span class="path">Install</span>.</p>
+    </li>
+
+    <li>
+      <h2>Switch on tracking</h2>
+      <p>Open FeedMiles, read what it does and doesn't keep, and tap <strong>I agree</strong>. It opens Accessibility settings: find <span class="path">FeedMiles scroll tracking</span> and switch it on.</p>
+      <p class="note">If the switch is greyed out or you see <em>"Restricted setting"</em>, that's Android being careful with apps from outside the Play Store. Do this once:</p>
+      <ul>
+        <li>Try to switch it on once and close the warning.</li>
+        <li>Open <span class="path">Settings → Apps → FeedMiles</span>.</li>
+        <li>Tap <span class="path">⋮</span> (top right) → <span class="path">Allow restricted settings</span> and confirm with your PIN.</li>
+        <li>Go back to Accessibility and switch FeedMiles on.</li>
+      </ul>
+      <p>On some Samsung phones it's under <span class="path">Settings → Accessibility → Installed apps</span>.</p>
+    </li>
+
+    <li>
+      <h2>Stop your phone from killing it</h2>
+      <p>Some phones turn off background apps to save battery, and tracking stops with them. FeedMiles uses under 1% battery a day. Find your phone below:</p>
+      <details>
+        <summary>Xiaomi, Redmi, POCO (HyperOS / MIUI)</summary>
+        <ul>
+          <li><span class="path">Settings → Apps → Manage apps → FeedMiles → Autostart</span>: on.</li>
+          <li>Same page → <span class="path">Battery saver</span> → <span class="path">No restrictions</span>.</li>
+          <li>Open recent apps, long-press FeedMiles and tap the lock icon.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Samsung (One UI)</summary>
+        <ul>
+          <li><span class="path">Settings → Apps → FeedMiles → Battery</span> → <span class="path">Unrestricted</span>.</li>
+          <li><span class="path">Settings → Battery → Background usage limits</span>: make sure FeedMiles isn't in "Sleeping apps" or "Deep sleeping apps".</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Oppo, Realme (ColorOS / Realme UI)</summary>
+        <ul>
+          <li><span class="path">Settings → Apps → App management → FeedMiles → Battery usage</span>: allow background activity and auto launch.</li>
+          <li>Lock FeedMiles in recent apps (pull the card down or tap the lock).</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Vivo, iQOO (Funtouch OS / OriginOS)</summary>
+        <ul>
+          <li><span class="path">Settings → Battery → Background power consumption management → FeedMiles</span> → <span class="path">Allow</span>.</li>
+          <li><span class="path">Settings → Apps → Autostart</span>: turn FeedMiles on.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>OnePlus (OxygenOS)</summary>
+        <ul>
+          <li><span class="path">Settings → Apps → FeedMiles → Battery usage</span> → <span class="path">Allow background activity</span>, and set it to <span class="path">Don't optimise</span>.</li>
+          <li>Lock FeedMiles in recent apps.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Pixel and others</summary>
+        <ul>
+          <li><span class="path">Settings → Apps → FeedMiles → App battery usage</span> → <span class="path">Unrestricted</span>.</li>
+        </ul>
+      </details>
+      <p>Still not working? Turn FeedMiles off and on again in Accessibility.</p>
+    </li>
+
+    <li>
+      <h2>Go scroll</h2>
+      <p>Scroll Instagram or YouTube for a minute, then open FeedMiles to see how far your feed travelled.</p>
+    </li>
+  </ol>
+
+  <h2>Is this safe?</h2>
+  <p>Android warns about every app from outside the Play Store, and Accessibility is a powerful permission, so it's right to ask. FeedMiles only reads Instagram and YouTube, keeps only numbers, and never sends anything about you off the phone. Read the <a href="privacy.html">privacy policy</a>. You can switch it off anytime in Settings → Accessibility, or pause it inside the app.</p>
+
+  <footer>
+    <p>FeedMiles is not affiliated with Instagram, Meta, YouTube or Google.</p>
+    <p>Stuck? Email <a href="mailto:sarathbabuparakkadavu@gmail.com">sarathbabuparakkadavu@gmail.com</a> with your phone model.</p>
+  </footer>
+</main>
+</body>
+</html>
