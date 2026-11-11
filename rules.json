@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "version": "2026.11.1",
+  "_notes": "Source of truth for app knowledge (SPEC 9.5). Copied into assets at build time and served signed from GitHub Pages. The testfeed entry is exact. The Instagram and YouTube entries are BEST GUESSES from memory of older app versions, not checked against real Inspector dumps; every view id marked in their _notes must be confirmed or replaced in M6. Text tests are case-insensitive. Unknown keys are ignored except inside matchers, where keys starting with '_' are comments.",
+  "apps": [
+    {
+      "package": "com.feedmiles.testfeed",
+      "min_app_version": "0",
+      "_notes": "Fake feed app used for end-to-end tests. View ids are fixed by the :testfeed module.",
+      "surfaces": [
+        { "id": "TF_DIRECT", "exclude": true,
+          "match": { "viewIdContains": "com.feedmiles.testfeed:id/messages_list" } },
+        { "id": "TF_COMMENTS",
+          "match": { "viewIdContains": "com.feedmiles.testfeed:id/comments_list" } },
+        { "id": "TF_PAGES", "paged": true, "follow_hidden_means_friend": true,
+          "match": { "viewIdContains": "com.feedmiles.testfeed:id/pager" },
+          "item_rules": [
+            { "category": "AD", "kind": "AD",
+              "match": { "textEquals": ["Sponsored", "Ad"] } },
+            { "category": "STRANGER",
+              "match": { "any": [
+                { "buttonTextEquals": ["Follow"] },
+                { "textStartsWith": ["Suggested for you"] } ] } },
+            { "category": "FRIEND",
+              "match": { "buttonTextEquals": ["Following"] } }
+          ] },
+        { "id": "TF_FEED",
+          "match": { "viewIdContains": "com.feedmiles.testfeed:id/feed_list" } }
+      ],
+      "container": { "match": { "scrollable": true, "largestOnScreen": true } },
+      "item_rules": [
+        { "category": "AD", "kind": "AD",
+          "match": { "region": "header", "textEquals": ["Sponsored", "Ad"] } },
+        { "category": "STRANGER",
+          "match": { "any": [
+            { "textStartsWith": ["Suggested for you", "Suggested posts", "Suggested reels"] },
+            { "region": "header", "buttonTextEquals": ["Follow"] } ] } },
+        { "category": "FRIEND",
+          "match": { "viewIdContains": "com.feedmiles.testfeed:id/post_header" } }
+      ],
+      "locales": {
+        "hi": {
+          "Sponsored": "प्रायोजित",
+          "Suggested for you": "आपके लिए सुझाव",
+          "Follow": "फ़ॉलो करें",
+          "Following": "फ़ॉलो कर रहे हैं"
+        }
+      },
+      "health": { "max_unknown_ratio": 0.4, "min_sample_mm": 200000 }
+    },
+    {
+      "package": "com.instagram.android",
+      "min_app_version": "0",
+      "_notes": "UNVERIFIED. Ids recalled from 2023-2025 builds: row_feed_photo_profile_name (post header username), secondary_label (Sponsored line under the name), clips_viewer_view_pager (Reels), direct_inbox / direct_thread (DMs), layout_comment_thread_edittext (comment composer). Replace with Inspector dumps in M6.",
+      "surfaces": [
+        { "id": "IG_DIRECT", "exclude": true,
+          "match": { "any": [
+            { "windowClassContains": ["Direct"] },
+            { "viewIdContains": ["com.instagram.android:id/direct_inbox", "com.instagram.android:id/direct_thread", "com.instagram.android:id/thread_title", "com.instagram.android:id/row_thread_composer"] } ] } },
+        { "id": "IG_COMMENTS_COMPOSE", "exclude": true,
+          "match": { "viewIdContains": ["com.instagram.android:id/layout_comment_thread_edittext", "com.instagram.android:id/comment_composer"] } },
+        { "id": "IG_STORIES",
+          "match": { "viewIdContains": ["com.instagram.android:id/reel_viewer_root", "com.instagram.android:id/reel_viewer_media_layout"] } },
+        { "id": "IG_REELS", "paged": true, "follow_hidden_means_friend": true,
+          "match": { "viewIdContains": "com.instagram.android:id/clips_viewer_view_pager" },
+          "item_rules": [
+            { "category": "AD", "kind": "AD",
+              "match": { "any": [
+                { "textEquals": ["Sponsored", "Ad"] },
+                { "contentDescEquals": ["Sponsored"] },
+                { "viewIdContains": "com.instagram.android:id/clips_ad_cta" } ] } },
+            { "category": "STRANGER",
+              "match": { "any": [
+                { "buttonTextEquals": ["Follow"] },
+                { "textStartsWith": ["Suggested for you", "Suggested reels"] } ] } },
+            { "category": "FRIEND",
+              "match": { "buttonTextEquals": ["Following"] } }
+          ] },
+        { "id": "IG_SEARCH",
+          "match": { "viewIdContains": "com.instagram.android:id/action_bar_search_edit_text" } },
+        { "id": "IG_EXPLORE",
+          "match": { "any": [
+            { "viewIdContains": "com.instagram.android:id/explore_action_bar" },
+            { "viewIdContains": "com.instagram.android:id/explore_grid" } ] } },
+        { "id": "IG_PROFILE",
+          "match": { "any": [
+            { "viewIdContains": "com.instagram.android:id/profile_header" },
+            { "viewIdContains": "com.instagram.android:id/row_profile_header" } ] } },
+        { "id": "IG_FEED",
+          "match": { "any": [
+            { "viewIdContains": "com.instagram.android:id/row_feed_photo_profile_name" },
+            { "viewIdContains": "com.instagram.android:id/row_feed_profile_header" },
+            { "viewIdContains": "com.instagram.android:id/feed_tab" } ] } }
+      ],
+      "container": { "match": { "scrollable": true, "largestOnScreen": true } },
+      "item_rules": [
+        { "category": "AD", "kind": "AD",
+          "match": { "region": "header", "any": [
+            { "textEquals": ["Sponsored", "Ad", "Paid partnership"] },
+            { "textStartsWith": ["Paid partnership"] },
+            { "viewIdContains": "com.instagram.android:id/secondary_label", "textEquals": ["Sponsored", "Ad"] } ] } },
+        { "category": "STRANGER",
+          "match": { "any": [
+            { "textStartsWith": ["Suggested for you", "Suggested posts", "Suggested reels", "Suggested threads"] },
+            { "region": "header", "buttonTextEquals": ["Follow"] } ] } },
+        { "category": "FRIEND",
+          "match": { "any": [
+            { "viewIdContains": "com.instagram.android:id/row_feed_photo_profile_name" },
+            { "viewIdContains": "com.instagram.android:id/row_feed_profile_header" } ] } }
+      ],
+      "locales": {
+        "hi": {
+          "_notes": "Hindi labels unverified.",
+          "Sponsored": "प्रायोजित",
+          "Paid partnership": "सशुल्क साझेदारी",
+          "Suggested for you": ["आपके लिए सुझाए गए", "आपके लिए सुझाव"],
+          "Suggested posts": "सुझाई गई पोस्ट",
+          "Suggested reels": "सुझाई गई रील",
+          "Follow": "फ़ॉलो करें",
+          "Following": "फ़ॉलो कर रहे हैं"
+        }
+      },
+      "health": { "max_unknown_ratio": 0.4, "min_sample_mm": 200000 }
+    },
+    {
+      "package": "com.google.android.youtube",
+      "min_app_version": "0",
+      "_notes": "UNVERIFIED. Ids recalled from 2024-2025 builds: reel_recycler / reel_player_page_container (Shorts), results (home list), watch_player / watch_while_layout (watch page), comments composer. Ad badges are often only in content descriptions. Replace with Inspector dumps in M6.",
+      "surfaces": [
+        { "id": "YT_COMMENTS_COMPOSE", "exclude": true,
+          "match": { "viewIdContains": ["com.google.android.youtube:id/comment_composer", "com.google.android.youtube:id/comment_edit_text"] } },
+        { "id": "YT_SHORTS", "paged": true, "follow_hidden_means_friend": false,
+          "match": { "any": [
+            { "viewIdContains": "com.google.android.youtube:id/reel_recycler" },
+            { "viewIdContains": "com.google.android.youtube:id/reel_player_page_container" } ] },
+          "item_rules": [
+            { "category": "AD", "kind": "AD",
+              "match": { "any": [
+                { "textEquals": ["Sponsored", "Ad"] },
+                { "contentDescContains": ["sponsored"] },
+                { "viewIdContains": "com.google.android.youtube:id/ad_badge" } ] } },
+            { "category": "STRANGER",
+              "match": { "buttonTextEquals": ["Subscribe"] } },
+            { "category": "FRIEND",
+              "match": { "buttonTextEquals": ["Subscribed"] } }
+          ] },
+        { "id": "YT_WATCH",
+          "match": { "any": [
+            { "viewIdContains": "com.google.android.youtube:id/watch_player" },
+            { "viewIdContains": "com.google.android.youtube:id/watch_while_layout" } ] } },
+        { "id": "YT_HOME",
+          "match": { "any": [
+            { "viewIdContains": "com.google.android.youtube:id/results" },
+            { "viewIdContains": "com.google.android.youtube:id/pivot_bar" } ] } }
+      ],
+      "container": { "match": { "scrollable": true, "largestOnScreen": true } },
+      "item_rules": [
+        { "category": "AD", "kind": "AD",
+          "match": { "any": [
+            { "textEquals": ["Sponsored", "Ad"] },
+            { "contentDescContains": ["sponsored"] },
+            { "viewIdContains": "com.google.android.youtube:id/ad_badge" } ] } }
+      ],
+      "locales": {
+        "hi": {
+          "_notes": "Hindi labels unverified.",
+          "Sponsored": "प्रायोजित",
+          "Ad": "विज्ञापन",
+          "Subscribe": "सदस्यता लें",
+          "Subscribed": "सदस्यता ली गई"
+        }
+      },
+      "health": { "max_unknown_ratio": 0.6, "min_sample_mm": 200000 }
+    }
+  ]
+}
