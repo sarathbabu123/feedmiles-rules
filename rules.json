@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "2026.11.1",
+  "version": "2026.11.2",
   "_notes": "Source of truth for app knowledge (SPEC 9.5). Copied into assets at build time and served signed from GitHub Pages. The testfeed entry is exact. The Instagram and YouTube entries are BEST GUESSES from memory of older app versions, not checked against real Inspector dumps; every view id marked in their _notes must be confirmed or replaced in M6. Text tests are case-insensitive. Unknown keys are ignored except inside matchers, where keys starting with '_' are comments.",
   "apps": [
     {
@@ -58,7 +58,7 @@
             { "windowClassContains": ["Direct"] },
             { "viewIdContains": ["com.instagram.android:id/direct_inbox", "com.instagram.android:id/direct_thread", "com.instagram.android:id/thread_title", "com.instagram.android:id/row_thread_composer"] } ] } },
         { "id": "IG_COMMENTS_COMPOSE", "exclude": true,
-          "match": { "viewIdContains": ["com.instagram.android:id/layout_comment_thread_edittext", "com.instagram.android:id/comment_composer"] } },
+          "match": { "viewIdContains": ["com.instagram.android:id/layout_comment_thread_edittext", "com.instagram.android:id/comment_composer_edit_text"] } },
         { "id": "IG_STORIES",
           "match": { "viewIdContains": ["com.instagram.android:id/reel_viewer_root", "com.instagram.android:id/reel_viewer_media_layout"] } },
         { "id": "IG_REELS", "paged": true, "follow_hidden_means_friend": true,
@@ -129,7 +129,7 @@
       "surfaces": [
         { "id": "YT_COMMENTS_COMPOSE", "exclude": true,
           "match": { "viewIdContains": ["com.google.android.youtube:id/comment_composer", "com.google.android.youtube:id/comment_edit_text"] } },
-        { "id": "YT_SHORTS", "paged": true, "follow_hidden_means_friend": false,
+        { "id": "YT_SHORTS", "paged": true, "follow_hidden_means_friend": true,
           "match": { "any": [
             { "viewIdContains": "com.google.android.youtube:id/reel_recycler" },
             { "viewIdContains": "com.google.android.youtube:id/reel_player_page_container" } ] },
@@ -145,9 +145,7 @@
               "match": { "buttonTextEquals": ["Subscribed"] } }
           ] },
         { "id": "YT_WATCH",
-          "match": { "any": [
-            { "viewIdContains": "com.google.android.youtube:id/watch_player" },
-            { "viewIdContains": "com.google.android.youtube:id/watch_while_layout" } ] } },
+          "match": { "viewIdContains": "com.google.android.youtube:id/watch_player" } },
         { "id": "YT_HOME",
           "match": { "any": [
             { "viewIdContains": "com.google.android.youtube:id/results" },
